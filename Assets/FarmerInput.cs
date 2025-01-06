@@ -44,6 +44,15 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchMode"",
+                    ""type"": ""Value"",
+                    ""id"": ""0a8051f2-5556-48d2-870b-d6aef97764fd"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -178,6 +187,28 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Plant"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""376f5979-0fea-4fd9-8828-9f1697a35406"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24ab2a8b-2fc5-4965-a597-2bfbf3f9c287"",
+                    ""path"": ""<VirtualMouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -188,6 +219,7 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
         m_Farmer = asset.FindActionMap("Farmer", throwIfNotFound: true);
         m_Farmer_Move = m_Farmer.FindAction("Move", throwIfNotFound: true);
         m_Farmer_Plant = m_Farmer.FindAction("Plant", throwIfNotFound: true);
+        m_Farmer_SwitchMode = m_Farmer.FindAction("SwitchMode", throwIfNotFound: true);
     }
 
     ~@FarmerInput()
@@ -256,12 +288,14 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
     private List<IFarmerActions> m_FarmerActionsCallbackInterfaces = new List<IFarmerActions>();
     private readonly InputAction m_Farmer_Move;
     private readonly InputAction m_Farmer_Plant;
+    private readonly InputAction m_Farmer_SwitchMode;
     public struct FarmerActions
     {
         private @FarmerInput m_Wrapper;
         public FarmerActions(@FarmerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Farmer_Move;
         public InputAction @Plant => m_Wrapper.m_Farmer_Plant;
+        public InputAction @SwitchMode => m_Wrapper.m_Farmer_SwitchMode;
         public InputActionMap Get() { return m_Wrapper.m_Farmer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -277,6 +311,9 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
             @Plant.started += instance.OnPlant;
             @Plant.performed += instance.OnPlant;
             @Plant.canceled += instance.OnPlant;
+            @SwitchMode.started += instance.OnSwitchMode;
+            @SwitchMode.performed += instance.OnSwitchMode;
+            @SwitchMode.canceled += instance.OnSwitchMode;
         }
 
         private void UnregisterCallbacks(IFarmerActions instance)
@@ -287,6 +324,9 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
             @Plant.started -= instance.OnPlant;
             @Plant.performed -= instance.OnPlant;
             @Plant.canceled -= instance.OnPlant;
+            @SwitchMode.started -= instance.OnSwitchMode;
+            @SwitchMode.performed -= instance.OnSwitchMode;
+            @SwitchMode.canceled -= instance.OnSwitchMode;
         }
 
         public void RemoveCallbacks(IFarmerActions instance)
@@ -308,5 +348,6 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnPlant(InputAction.CallbackContext context);
+        void OnSwitchMode(InputAction.CallbackContext context);
     }
 }

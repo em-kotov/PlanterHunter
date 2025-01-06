@@ -10,10 +10,12 @@ public class Subscriber : MonoBehaviour
     private void OnEnable()
     {
         _inputReader.PlantClicked += _farmer.OnPlantClicked;
+        _inputReader.ModeSwitched += _farmer.OnModeSwitched;
     }
 
     private void OnDisable()
     {
         _inputReader.PlantClicked -= _farmer.OnPlantClicked;
+        _inputReader.ModeSwitched -= _farmer.OnModeSwitched;
     }
 }

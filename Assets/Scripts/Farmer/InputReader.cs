@@ -5,15 +5,19 @@ using UnityEngine.InputSystem;
 public class InputReader : MonoBehaviour
 {
     private FarmerInput _farmerInput;
+    private PlayerMode _currentMode = PlayerMode.Shooting;
 
+    public PlayerMode CurrentMode => _currentMode;
     public Vector2 MoveDirection { get; private set; }
 
     public event Action PlantClicked;
+    public event Action ModeSwitched;
 
     private void Awake()
     {
         _farmerInput = new FarmerInput();
 
+        _farmerInput.Farmer.SwitchMode.performed += OnModeSwitched;
         _farmerInput.Farmer.Plant.performed += OnPlanted;
     }
 
@@ -40,5 +44,31 @@ public class InputReader : MonoBehaviour
     private void OnPlanted(InputAction.CallbackContext context)
     {
         PlantClicked?.Invoke();
+    }
+
+    private void OnModeSwitched(InputAction.CallbackContext context)
+    {
+        Vector2 scrollValue = context.ReadValue<Vector2>();
+        float scrollY = scrollValue.y;
+
+        // Get total number of modes
+        int modesCount = System.Enum.GetValues(typeof(PlayerMode)).Length;
+
+        // Get current mode as integer
+        int currentIndex = (int)_currentMode;
+
+        if (scrollY > 0)
+        {
+            // Scroll up, increment and wrap around
+            currentIndex = (currentIndex + 1) % modesCount;
+        }
+        else if (scrollY < 0)
+        {
+            // Scroll down, decrement and wrap around
+            currentIndex = (currentIndex - 1 + modesCount) % modesCount;
+        }
+
+        _currentMode = (PlayerMode)currentIndex;
+        ModeSwitched?.Invoke();
     }
 }
