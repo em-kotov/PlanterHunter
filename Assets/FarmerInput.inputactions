@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "CollectHarvest",
+                    "type": "Button",
+                    "id": "8ea0a9a4-5c2a-4bb8-8bc5-ea4d369576fe",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -185,6 +194,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "884b7978-1b12-4ce9-92d6-fdfe26657dcd",
+                    "path": "<Keyboard>/#(E)",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CollectHarvest",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

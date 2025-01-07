@@ -53,6 +53,15 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CollectHarvest"",
+                    ""type"": ""Button"",
+                    ""id"": ""8ea0a9a4-5c2a-4bb8-8bc5-ea4d369576fe"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -209,6 +218,17 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""884b7978-1b12-4ce9-92d6-fdfe26657dcd"",
+                    ""path"": ""<Keyboard>/#(E)"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CollectHarvest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -220,6 +240,7 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
         m_Farmer_Move = m_Farmer.FindAction("Move", throwIfNotFound: true);
         m_Farmer_Plant = m_Farmer.FindAction("Plant", throwIfNotFound: true);
         m_Farmer_SwitchMode = m_Farmer.FindAction("SwitchMode", throwIfNotFound: true);
+        m_Farmer_CollectHarvest = m_Farmer.FindAction("CollectHarvest", throwIfNotFound: true);
     }
 
     ~@FarmerInput()
@@ -289,6 +310,7 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Farmer_Move;
     private readonly InputAction m_Farmer_Plant;
     private readonly InputAction m_Farmer_SwitchMode;
+    private readonly InputAction m_Farmer_CollectHarvest;
     public struct FarmerActions
     {
         private @FarmerInput m_Wrapper;
@@ -296,6 +318,7 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Farmer_Move;
         public InputAction @Plant => m_Wrapper.m_Farmer_Plant;
         public InputAction @SwitchMode => m_Wrapper.m_Farmer_SwitchMode;
+        public InputAction @CollectHarvest => m_Wrapper.m_Farmer_CollectHarvest;
         public InputActionMap Get() { return m_Wrapper.m_Farmer; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -314,6 +337,9 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
             @SwitchMode.started += instance.OnSwitchMode;
             @SwitchMode.performed += instance.OnSwitchMode;
             @SwitchMode.canceled += instance.OnSwitchMode;
+            @CollectHarvest.started += instance.OnCollectHarvest;
+            @CollectHarvest.performed += instance.OnCollectHarvest;
+            @CollectHarvest.canceled += instance.OnCollectHarvest;
         }
 
         private void UnregisterCallbacks(IFarmerActions instance)
@@ -327,6 +353,9 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
             @SwitchMode.started -= instance.OnSwitchMode;
             @SwitchMode.performed -= instance.OnSwitchMode;
             @SwitchMode.canceled -= instance.OnSwitchMode;
+            @CollectHarvest.started -= instance.OnCollectHarvest;
+            @CollectHarvest.performed -= instance.OnCollectHarvest;
+            @CollectHarvest.canceled -= instance.OnCollectHarvest;
         }
 
         public void RemoveCallbacks(IFarmerActions instance)
@@ -349,5 +378,6 @@ public partial class @FarmerInput: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnPlant(InputAction.CallbackContext context);
         void OnSwitchMode(InputAction.CallbackContext context);
+        void OnCollectHarvest(InputAction.CallbackContext context);
     }
 }

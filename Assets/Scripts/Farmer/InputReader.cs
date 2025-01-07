@@ -6,12 +6,15 @@ public class InputReader : MonoBehaviour
 {
     private FarmerInput _farmerInput;
     private PlayerMode _currentMode = PlayerMode.Shooting;
+    private bool _isCollectHeld = false;
 
     public PlayerMode CurrentMode => _currentMode;
     public Vector2 MoveDirection { get; private set; }
 
-    public event Action PlantClicked;
     public event Action ModeSwitched;
+    public event Action PlantClicked;
+    public event Action CollectStarted;
+    public event Action CollectReleased;
 
     private void Awake()
     {
@@ -19,6 +22,7 @@ public class InputReader : MonoBehaviour
 
         _farmerInput.Farmer.SwitchMode.performed += OnModeSwitched;
         _farmerInput.Farmer.Plant.performed += OnPlanted;
+        _farmerInput.Farmer.CollectHarvest.performed += OnCollectPerformed;
     }
 
     private void Update()
@@ -44,6 +48,19 @@ public class InputReader : MonoBehaviour
     private void OnPlanted(InputAction.CallbackContext context)
     {
         PlantClicked?.Invoke();
+    }
+
+    private void OnCollectPerformed(InputAction.CallbackContext context)
+    {
+        if(_isCollectHeld == false)
+        {
+            _isCollectHeld = true;
+            CollectStarted?.Invoke();
+            return;
+        }
+
+        _isCollectHeld = false;
+        CollectReleased?.Invoke();
     }
 
     private void OnModeSwitched(InputAction.CallbackContext context)

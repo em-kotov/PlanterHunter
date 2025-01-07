@@ -10,6 +10,7 @@ public class Planter : MonoBehaviour
 
     [Header("Visual Feedback")]
     [SerializeField] private SpriteRenderer _plantingIndicator;
+    [SerializeField] private SpriteRenderer _hatSprite;
 
     // Optional: Visual feedback for planting position
     private void Update()
@@ -28,6 +29,13 @@ public class Planter : MonoBehaviour
 
             _plantingIndicator.color = indicatorColor;
         }
+    }
+
+    public void SetActive(bool isActive)
+    {
+        _plantingIndicator.enabled = isActive;
+        _hatSprite.enabled = isActive;
+        enabled = isActive;
     }
 
     public void PlantCabbage(Vector3 position)

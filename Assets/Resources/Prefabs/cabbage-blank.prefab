@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8815744420821412428}
   - component: {fileID: 9027529330624810106}
   - component: {fileID: 4771016764638436398}
+  - component: {fileID: 9197907349148367255}
+  - component: {fileID: 3666661891471300249}
   m_Layer: 10
   m_Name: cabbage-blank
   m_TagString: Untagged
@@ -104,7 +106,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -118,9 +120,53 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!50 &9197907349148367255
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316165708564024447}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &3666661891471300249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316165708564024447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094686f5e6cd79e4f88940bd1a3ad79c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _growthStages:
+  - {fileID: 21300000, guid: d1dd2ba41376d0c4ebebb71fcdd8c04f, type: 3}
+  - {fileID: 21300000, guid: df8591ff5af5f294caec6a1aaa8abe7d, type: 3}
+  - {fileID: 21300000, guid: 6158f9cb7868d924e84ea530a01a0a15, type: 3}
+  _timeBetweenStages: 10
