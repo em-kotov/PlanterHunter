@@ -6,8 +6,8 @@ public class CameraFollow : MonoBehaviour
     public float _smoothness = 0.1f;  // Lower value = more delay (0.1)
     public float _leadDistance = 0.5f;   // How far ahead camera looks (2)
     public float _zoomSpeed = 0.5f;      // How fast camera zooms (2)
-    public float _minZoom = 5f;        // Camera won't zoom closer than this (5)
-    public float _maxZoom = 8f;        // Camera won't zoom further than this (8)
+    public float _minZoom = 6f;        // Camera won't zoom closer than this (5)
+    public float _maxZoom = 9f;        // Camera won't zoom further than this (8)
 
     private Vector3 lastPlayerPos;
     private float currentZoom;

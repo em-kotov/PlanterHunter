@@ -3,9 +3,6 @@ using UnityEngine.Rendering;
 
 public class PlantableObject : MonoBehaviour, IInteractable
 {
-    // [SerializeField] private Sprite _startSprite;
-    // [SerializeField] private Sprite _mediumSprite;
-    // [SerializeField] private Sprite _readySprite;
     [SerializeField] private Sprite[] _growthStages;  // Array of sprites for different stages
      private float _timeBetweenStages = 6f;  // Time in seconds between stages
     // [SerializeField] private int wateringsNeeded = 2;  // How many times plant needs water

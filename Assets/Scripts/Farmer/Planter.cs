@@ -4,7 +4,7 @@ public class Planter : MonoBehaviour
 {
     [SerializeField] private GameObject _cabbagePrefab;
 
-    private float _gridSize = 1f;
+    private float _gridSize = 1.5f;
     private Vector2 _areaMin = new Vector2(-5f, -5f);
     private Vector2 _areaMax = new Vector2(5f, 5f);
 

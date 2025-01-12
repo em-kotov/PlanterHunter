@@ -1,16 +1,24 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Farmer : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private Planter _planter;
+    [SerializeField] private Harvest _harvest;
     [SerializeField] private Hunter _hunter;
+    [SerializeField] private AuraPicker _auraPicker;
     [SerializeField] private Movement _movement;
 
     private Vector3 _startPosition = new Vector3(0f, 0f, 0f);
-    private float _health = 3f;
     private bool _isCuttingHarvest = false;
+
+    //shooting
+    private bool _hasAura = false;
+
+    //health
+    private float _health = 3f;
 
     public event Action<Vector3> Died;
     public event Action Hit;
@@ -26,7 +34,17 @@ public class Farmer : MonoBehaviour
         CheckHealth();
         _movement.Move(_inputReader.MoveDirection);
 
-        CutHarvest();
+        //shoot 
+        Shoot();
+
+        // harvest
+        if (_isCuttingHarvest)
+        {
+            _harvest.CutHarvest();
+        }
+
+        // Update collection movement
+        _harvest.UpdatePlantCollection();
     }
 
     public void OnPlantClicked()
@@ -47,14 +65,6 @@ public class Farmer : MonoBehaviour
         _isCuttingHarvest = false;
     }
 
-    public void OnPlantFound(PlantableObject plant)
-    {
-        if (plant.IsCut)
-        {
-            plant.Deactivate();
-        }
-    }
-
     public void OnModeSwitched()
     {
         if (_inputReader.CurrentMode != PlayerMode.Planting)
@@ -68,33 +78,22 @@ public class Farmer : MonoBehaviour
         _planter.SetActive(true);
     }
 
-    private void CutHarvest()
+    public void OnAuraFound(Aura aura)
     {
-        if (_isCuttingHarvest)
-        {
-            int plantLayerIndex = 10;
-            float collectDistance = 2.5f;
-            float collectForce = 5f;
-
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, collectDistance, LayerMaskConverter.GetLayerMask(plantLayerIndex));
-
-            for (int i = 0; i < colliders.Length; i++)
-            {
-                PlantableObject plant = colliders[i].gameObject.GetComponent<PlantableObject>();
-
-                if (plant.IsReadyToCut())
-                {
-                    colliders[i].attachedRigidbody.AddForce(
-                        ((transform.position - plant.transform.position) * collectForce).normalized,
-                        ForceMode2D.Impulse);
-                    plant.SetCut();
-                }
-            }
-
-            Debug.Log("Cutting Harvest.");
-        }
+        _auraPicker.SetAura(aura);
     }
 
+    #region Shooting
+    private void Shoot()
+    {
+        if (_inputReader.CurrentMode != PlayerMode.Shooting && _hasAura == false)
+            return;
+
+        _hunter.Shoot();
+    }
+    #endregion
+
+    #region Health
     private void Deactivate()
     {
         Died?.Invoke(transform.position);
@@ -117,4 +116,5 @@ public class Farmer : MonoBehaviour
             Deactivate();
         }
     }
+    #endregion
 }

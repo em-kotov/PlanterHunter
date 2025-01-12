@@ -14,7 +14,7 @@ public class Subscriber : MonoBehaviour
         _inputReader.CollectStarted += _farmer.OnCollectStarted;
         _inputReader.CollectReleased += _farmer.OnCollectReleased;
 
-        _collisionRegister.PlantFound += _farmer.OnPlantFound;
+        _collisionRegister.AuraFound += _farmer.OnAuraFound;
     }
 
     private void OnDisable()
@@ -24,6 +24,6 @@ public class Subscriber : MonoBehaviour
         _inputReader.CollectStarted -= _farmer.OnCollectStarted;
         _inputReader.CollectReleased -= _farmer.OnCollectReleased;
 
-        _collisionRegister.PlantFound -= _farmer.OnPlantFound;
+        _collisionRegister.AuraFound -= _farmer.OnAuraFound;
     }
 }
