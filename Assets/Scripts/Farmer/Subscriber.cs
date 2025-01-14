@@ -9,21 +9,21 @@ public class Subscriber : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputReader.ModeSwitched += _farmer.OnModeSwitched;
-        _inputReader.PlantClicked += _farmer.OnPlantClicked;
-        _inputReader.CollectStarted += _farmer.OnCollectStarted;
-        _inputReader.CollectReleased += _farmer.OnCollectReleased;
+        // _inputReader.ModeSwitched += _farmer.OnModeSwitched;
+        // _inputReader.PlantClicked += _farmer.OnPlantClicked;
+        // _inputReader.CollectStarted += _farmer.OnCollectStarted;
+        // _inputReader.CollectReleased += _farmer.OnCollectReleased;
 
-        _collisionRegister.AuraFound += _farmer.OnAuraFound;
+        // _collisionRegister.AuraFound += _farmer.OnAuraFound;
     }
 
     private void OnDisable()
     {
-        _inputReader.ModeSwitched -= _farmer.OnModeSwitched;
-        _inputReader.PlantClicked -= _farmer.OnPlantClicked;
-        _inputReader.CollectStarted -= _farmer.OnCollectStarted;
-        _inputReader.CollectReleased -= _farmer.OnCollectReleased;
+        // _inputReader.ModeSwitched -= _farmer.OnModeSwitched;
+        // _inputReader.PlantClicked -= _farmer.OnPlantClicked;
+        // _inputReader.CollectStarted -= _farmer.OnCollectStarted;
+        // _inputReader.CollectReleased -= _farmer.OnCollectReleased;
 
-        _collisionRegister.AuraFound -= _farmer.OnAuraFound;
+        // _collisionRegister.AuraFound -= _farmer.OnAuraFound;
     }
 }

@@ -2,11 +2,44 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    private FarmerInput _farmerInput;
+    private Vector3 _startPosition = new Vector3(0f, 0f, 0f);
     private Vector2 _moveDirection;
+
     private Vector2 _smoothedDirection;
     private float _moveSpeed = 7f;
     private float _deadzone = 0.1f;
     private float _smoothing = 0.1f;
+
+    private void Awake()
+    {
+        _farmerInput = new FarmerInput();
+    }
+
+    private void Start()
+    {
+        transform.position = _startPosition;
+    }
+
+    private void Update()
+    {
+        Move(_farmerInput.Farmer.Move.ReadValue<Vector2>());
+    }
+
+    private void OnEnable()
+    {
+        _farmerInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _farmerInput.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        _farmerInput.Dispose();
+    }
 
     public void Move(Vector2 direction)
     {

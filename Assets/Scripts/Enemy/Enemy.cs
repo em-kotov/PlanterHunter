@@ -3,7 +3,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private Transform _player;
-    private float _speed = 2f;
+    private float _speed = 1.5f;
     private float _chaseDistance = 13f;
     private float _detectRadius = 13f;
     private bool _canChase = false;

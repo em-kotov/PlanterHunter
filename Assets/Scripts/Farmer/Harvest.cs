@@ -70,6 +70,6 @@ public class Harvest : MonoBehaviour
     private void CollectPlant(PlantableObject plant)
     {
         // Add any collection effects here
-        plant.Deactivate();
+        // plant.Deactivate();
     }
 }

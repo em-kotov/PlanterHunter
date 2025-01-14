@@ -11,7 +11,10 @@ public class CollisionRegister : MonoBehaviour
         if (collider.gameObject.TryGetComponent(out IInteractable interactable))
         {
             if (interactable is Aura)
+            {
                 AuraFound?.Invoke(interactable as Aura);
+                Debug.Log(interactable);
+            }
         }
     }
 }

@@ -9,6 +9,8 @@ public class AuraSlot : MonoBehaviour
     public bool IsEmpty { get; private set; } = true;
     public float SecondsLeft { get; private set; }
 
+    public event Action OnDeactivated;
+
     private void Start()
     {
         _renderer = GetComponent<SpriteRenderer>();
@@ -36,18 +38,10 @@ public class AuraSlot : MonoBehaviour
         IsEmpty = false;
     }
 
-    public void TransferFrom(AuraSlot other)
-    {
-        if (other.IsEmpty)
-            return;
-
-        Initialize(other._renderer.color, other.SecondsLeft);
-        other.Deactivate();
-    }
-
     public void Deactivate()
     {
         _renderer.enabled = false;
         IsEmpty = true;
+        OnDeactivated?.Invoke();
     }
 }

@@ -3,33 +3,38 @@ using UnityEngine;
 
 public class Aura : MonoBehaviour, IInteractable
 {
-    public bool CanCollect { get; private set; } = true;
-    public float Duration { get; private set; } = 5f;
+    public bool IsIncreasingAttackSpeed = true;
+    public bool IsIncreasingDamage = true;
+    public bool IsIncreasingMoveSpeed = true;
 
     private SpriteRenderer _renderer;
 
-    public event Action<Vector3, Aura> Collected;
+    public float Duration { get; private set; } = 4f;
 
     private void Start()
     {
         _renderer = GetComponent<SpriteRenderer>();
     }
 
-    public void Deactivate()
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        CanCollect = false;
-        Collected?.Invoke(transform.position, this);
-        gameObject.SetActive(false);
-    }
+        AuraSlotFiller filler = collider.gameObject.GetComponentInChildren<AuraSlotFiller>();
+        Weapon weapon = collider.gameObject.GetComponentInChildren<Weapon>();
 
-    public void Initialize(Color color)
-    {
-        _renderer = GetComponent<SpriteRenderer>();
-        _renderer.color = color;
-    }
+        if (filler != null && weapon != null)
+        {
+            filler.SetAura(_renderer.color, Duration);
 
-    public Color GetColor()
-    {
-        return _renderer.color;
+            if (IsIncreasingAttackSpeed)
+                weapon.SetAttackSpeed(Duration);
+
+            if (IsIncreasingDamage)
+                weapon.SetDamage(Duration);
+
+            if (IsIncreasingMoveSpeed)
+                weapon.SetMoveSpeed(Duration);
+
+            gameObject.SetActive(false);
+        }
     }
 }

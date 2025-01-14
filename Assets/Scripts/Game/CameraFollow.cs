@@ -18,6 +18,7 @@ public class CameraFollow : MonoBehaviour
         {
             lastPlayerPos = _player.position;
             currentZoom = (_minZoom + _maxZoom) / 2f;  // Start at middle zoom
+            // currentZoom = _minZoom;
         }
     }
 
@@ -31,7 +32,7 @@ public class CameraFollow : MonoBehaviour
 
         // Target position is ahead of player based on their movement
         Vector3 targetPosition = _player.position + moveDirection * _leadDistance;
-        
+
         // Keep camera's height (y position)
         targetPosition.z = transform.position.z;
 
@@ -49,5 +50,15 @@ public class CameraFollow : MonoBehaviour
 
         // Apply zoom to camera
         Camera.main.orthographicSize = currentZoom;
+    }
+
+    public void SetDefaultZoom()
+    {
+        _minZoom = 6f;
+    }
+    
+    public void SetIncreasedZoom()
+    {
+        _minZoom = 12f;
     }
 }
