@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: e74c78580c4cef64098e1e53f508853e, type: 3}
   m_Color: {r: 0.45204398, g: 1, b: 0.3050313, a: 1}
   m_FlipX: 0
@@ -106,7 +106,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 3639
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -166,3 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78dce2b746265aa4497bd76b85620aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 6.75
+  DeathEffect: {fileID: 340786142260954098, guid: aeb568be3d9afa04383b76c5b60d6273, type: 3}
+  DamageText: {fileID: 5503428976407470365, guid: 769b5b4f862d4a6488196f6b4dc2d686, type: 3}

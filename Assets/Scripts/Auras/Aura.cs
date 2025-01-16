@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class Aura : MonoBehaviour, IInteractable
 {
+    public float Duration = 4f;
     public bool IsIncreasingAttackSpeed = true;
-    public bool IsIncreasingDamage = true;
     public bool IsIncreasingMoveSpeed = true;
+    public bool IsIncreasingDamage = true;
+    public bool IsIncreasingSize = true;
+    public bool IsIncreasingNumber = true;
 
     private SpriteRenderer _renderer;
-
-    public float Duration { get; private set; } = 4f;
 
     private void Start()
     {
@@ -28,11 +29,17 @@ public class Aura : MonoBehaviour, IInteractable
             if (IsIncreasingAttackSpeed)
                 weapon.SetAttackSpeed(Duration);
 
+            if (IsIncreasingMoveSpeed)
+                weapon.SetMoveSpeed(Duration);
+
             if (IsIncreasingDamage)
                 weapon.SetDamage(Duration);
 
-            if (IsIncreasingMoveSpeed)
-                weapon.SetMoveSpeed(Duration);
+            if (IsIncreasingSize)
+                weapon.SetSize(Duration);
+
+            if (IsIncreasingNumber)
+                weapon.SetNumber(Duration);
 
             gameObject.SetActive(false);
         }

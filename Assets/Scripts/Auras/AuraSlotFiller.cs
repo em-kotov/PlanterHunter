@@ -9,7 +9,7 @@ public class AuraSlotFiller : MonoBehaviour
     [SerializeField] private AuraSlot _auraSlot2;
     [SerializeField] private AuraSlot _auraSlot3;
 
-    private List<AuraSlot> _auraSlots;
+    private List<AuraSlot> _auraSlots = new List<AuraSlot>();
 
     private void Start()
     {
@@ -23,6 +23,21 @@ public class AuraSlotFiller : MonoBehaviour
     public void SetAura(Color color, float duration)
     {
         AuraSlot emptySlot = _auraSlots.Find(slot => slot.IsEmpty);
-        emptySlot.Initialize(color, duration);
+
+        if (emptySlot != null)
+            emptySlot.Initialize(color, duration);
+    }
+
+    public float GetActiveAurasCount()
+    {
+        float count = 0;
+
+        foreach (AuraSlot slot in _auraSlots)
+        {
+            if (slot.IsEmpty == false)
+                count++;
+        }
+
+        return count;
     }
 }
