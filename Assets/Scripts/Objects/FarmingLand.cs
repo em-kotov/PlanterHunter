@@ -15,7 +15,7 @@ public class FarmingLand : MonoBehaviour
             return;
         }
 
-        _currentPlant = Instantiate(_plantPrefab, transform.position, Quaternion.identity);
+        SpawnPlant();
     }
 
     private void TrySpawnAura()
@@ -25,6 +25,12 @@ public class FarmingLand : MonoBehaviour
 
         _currentPlant.gameObject.SetActive(false);
         _currentPlant = null;
-        Instantiate(_auraPrefab, transform.position, Quaternion.identity);
+        Aura aura = Instantiate(_auraPrefab, transform.position, Quaternion.identity);
+        aura.WasCollected += SpawnPlant;
+    }
+
+    private void SpawnPlant()
+    {
+        _currentPlant = Instantiate(_plantPrefab, transform.position, Quaternion.identity);
     }
 }

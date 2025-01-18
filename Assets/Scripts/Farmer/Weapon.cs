@@ -44,6 +44,10 @@ public class Weapon : MonoBehaviour
     public Movement PlayerMovement;
     public TextMeshPro TotalDamage;
     public float TotalDamageValue = 0;
+    public AudioSource KnifeSwip;
+
+    private float _soundTimer = 0f;
+    private float _totalRotation = 0f;
 
     public List<Transform> Blades = new List<Transform>();
 
@@ -60,6 +64,20 @@ public class Weapon : MonoBehaviour
     {
         transform.Rotate(0f, 0f, _finalAttackSpeeed * Time.deltaTime);
         // TotalDamage.text = "total: " + TotalDamageValue.ToString() + "!";
+
+        // if(PlayerMovement.IsDead == false)
+        // {
+        //     // Calculate how many degrees the knife rotated this frame
+        //     float rotationThisFrame = _finalAttackSpeeed * Time.deltaTime;
+        //     _totalRotation += rotationThisFrame;
+
+        //     // Play sound every 360 degrees (one full rotation)
+        //     if (!KnifeSwip.isPlaying && _totalRotation >= 360f)
+        //     {
+        //         KnifeSwip.Play();
+        //         _totalRotation = 0f;
+        //     }
+        // }
 
         #region timers
         if (AttackSpeedSecondsLeft > 0)

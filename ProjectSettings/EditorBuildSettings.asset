@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Planter Hunter.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Version 2.unity
+    guid: 033fc9bcfa49e5f449d54e16ef7d4c72
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3010caf97dbbe584babafa223e94407f, type: 3}
   m_UseUCBPForAssetBundles: 0

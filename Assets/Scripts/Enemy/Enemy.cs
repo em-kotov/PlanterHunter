@@ -6,6 +6,9 @@ public class Enemy : MonoBehaviour
 {
     public float Health = 6.75f;
     public ParticleSystem DeathEffect;
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip _deathSound;
+    [SerializeField] private AudioClip smashSound;
     public TextMeshPro DamageText;
 
     private Transform _player;
@@ -13,17 +16,20 @@ public class Enemy : MonoBehaviour
     private float _chaseDistance = 13f;
     private float _detectRadius = 13f;
     private bool _canChase = false;
+    private bool _isDead = false;
 
     private void Awake()
     {
         gameObject.SetActive(true);
+        _isDead = false;
     }
 
     private void Update()
     {
-        if (Health <= 0)
+        if (Health <= 0 && _isDead == false)
         {
             Die();
+            _isDead = true;
         }
 
         DetectPlayer();
@@ -43,6 +49,8 @@ public class Enemy : MonoBehaviour
         {
             float registeredDamage = weapon.FinalDamage;
             Health -= registeredDamage;
+            source.clip = smashSound;
+            source.Play();
 
             //enemy damage indicator text
             TextMeshPro text = Instantiate(DamageText, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.identity);
@@ -53,7 +61,7 @@ public class Enemy : MonoBehaviour
 
             //weapon total damage text
             weapon.TotalDamageValue += registeredDamage;
-            weapon.TotalDamage.text = "total damage: " + weapon.TotalDamageValue.ToString() + "!";
+            weapon.TotalDamage.text = "total damage: " + weapon.TotalDamageValue.ToString("N2") + "!";
         }
     }
 
@@ -61,9 +69,13 @@ public class Enemy : MonoBehaviour
     {
         Collider2D collider = GetComponent<Collider2D>();
         collider.enabled = false;
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.enabled = false;
         ParticleSystem effect = Instantiate(DeathEffect, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
         effect.Play();
-        gameObject.SetActive(false);
+        source.clip = _deathSound;
+        source.Play();
+        Destroy(gameObject, source.clip.length);
     }
 
     private void DetectPlayer()

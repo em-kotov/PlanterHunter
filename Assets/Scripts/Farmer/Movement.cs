@@ -12,7 +12,9 @@ public class Movement : MonoBehaviour
     public Weapon Weapon;
     public TextMeshPro HealthText;
     public TextMeshPro DamageText;
+    public TextMeshPro BonusText;
     public ParticleSystem DeathEffect;
+    public AudioSource DeathSound;
 
     private FarmerInput _farmerInput;
     private Vector3 _startPosition = new Vector3(0f, 0f, 0f);
@@ -20,9 +22,13 @@ public class Movement : MonoBehaviour
     private Vector2 _smoothedDirection;
     private float _deadzone = 0.1f;
     private float _smoothing = 0.1f;
+
     private float _health = 5.7f;
     private float _damage = 0.95f;
-    private bool _isDead = false;
+    public bool IsDead = false;
+    //health bonus
+    private float _healthBonus = 0.35f;
+    private float _lastDamageValue = 0f;
 
     private void Awake()
     {
@@ -32,23 +38,27 @@ public class Movement : MonoBehaviour
         PlayerRenderer.enabled = true;
         HatRenderer.enabled = true;
         Weapon.enabled = true;
-        _isDead = false;
+        IsDead = false;
+
+        _lastDamageValue = Weapon.TotalDamageValue;
     }
 
-    private void Start()
-    {
-        // transform.position = _startPosition;
-    }
+    // private void Start()
+    // {
+    //     transform.position = _startPosition;
+    // }
 
     private void Update()
     {
-        if (_isDead == true)
+        if (IsDead == true)
             return;
 
         if (_health <= 0)
         {
             Die();
         }
+
+        AddBonusHealth();
 
         Move(_farmerInput.Farmer.Move.ReadValue<Vector2>());
     }
@@ -70,7 +80,7 @@ public class Movement : MonoBehaviour
             Destroy(text, 0.3f);
 
             //total health text
-            HealthText.text = "health: " + _health.ToString() + "!";
+            HealthText.text = "health: " + _health.ToString("N2") + "!";
         }
     }
 
@@ -121,12 +131,14 @@ public class Movement : MonoBehaviour
         PlayerRenderer.enabled = false;
         HatRenderer.enabled = false;
         Weapon.enabled = false;
-        _isDead = true;
+        IsDead = true;
 
         ParticleSystem effect = Instantiate(DeathEffect, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
         effect.Play();
         float duration = effect.main.duration;
         Destroy(effect.gameObject, duration);
+
+        DeathSound.Play();
 
         StartCoroutine(ReloadWithDelay(duration + 1f));
     }
@@ -137,5 +149,24 @@ public class Movement : MonoBehaviour
         yield return delay;
 
         SceneManager.LoadScene("Version 2");
+    }
+
+    private void AddBonusHealth()
+    {
+        if (Weapon.TotalDamageValue - _lastDamageValue < 10f)
+            return;
+
+        _lastDamageValue = Weapon.TotalDamageValue;
+        _health += _healthBonus;
+
+        //bonus indicator text
+        TextMeshPro text = Instantiate(BonusText, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.identity);
+        string indicator = "+" + _healthBonus.ToString() + "!";
+        text.text = indicator;
+        text.transform.Translate(Vector3.up * Time.deltaTime * 2f);
+        Destroy(text, 0.3f);
+
+        //total health text
+        HealthText.text = "health: " + _health.ToString("N2") + "!";
     }
 }

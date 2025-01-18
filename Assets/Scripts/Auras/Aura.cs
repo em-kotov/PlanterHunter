@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class Aura : MonoBehaviour, IInteractable
 {
-    public float Duration = 4f;
+    [SerializeField] private AudioSource _grabSound;
+
+    public float Duration = 9f;
     public bool IsIncreasingAttackSpeed = true;
     public bool IsIncreasingMoveSpeed = true;
     public bool IsIncreasingDamage = true;
@@ -11,6 +13,8 @@ public class Aura : MonoBehaviour, IInteractable
     public bool IsIncreasingNumber = true;
 
     private SpriteRenderer _renderer;
+
+    public event Action WasCollected;
 
     private void Start()
     {
@@ -24,24 +28,33 @@ public class Aura : MonoBehaviour, IInteractable
 
         if (filler != null && weapon != null)
         {
-            filler.SetAura(_renderer.color, Duration);
+            if (filler.GetActiveAurasCount() < 3f)
+            {
+                filler.SetAura(_renderer.color, Duration);
 
-            if (IsIncreasingAttackSpeed)
-                weapon.SetAttackSpeed(Duration);
+                if (IsIncreasingAttackSpeed)
+                    weapon.SetAttackSpeed(Duration);
 
-            if (IsIncreasingMoveSpeed)
-                weapon.SetMoveSpeed(Duration);
+                if (IsIncreasingMoveSpeed)
+                    weapon.SetMoveSpeed(Duration);
 
-            if (IsIncreasingDamage)
-                weapon.SetDamage(Duration);
+                if (IsIncreasingDamage)
+                    weapon.SetDamage(Duration);
 
-            if (IsIncreasingSize)
-                weapon.SetSize(Duration);
+                if (IsIncreasingSize)
+                    weapon.SetSize(Duration);
 
-            if (IsIncreasingNumber)
-                weapon.SetNumber(Duration);
+                if (IsIncreasingNumber)
+                    weapon.SetNumber(Duration);
 
-            gameObject.SetActive(false);
+                WasCollected?.Invoke();
+                WasCollected = null;
+                _grabSound.Play();
+                Collider2D thisCollider = GetComponent<Collider2D>();
+                thisCollider.enabled = false;
+                _renderer.enabled = false;
+                Destroy(gameObject, _grabSound.clip.length);
+            }
         }
     }
 }

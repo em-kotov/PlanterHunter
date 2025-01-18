@@ -3,8 +3,9 @@ using UnityEngine;
 public class PlantableObject : MonoBehaviour, IInteractable
 {
     [SerializeField] private Sprite[] _growthStages;
-    private float _timeBetweenStages = 2f;
+    [SerializeField] private AudioSource _popSound;
 
+    private float _timeBetweenStages = 2f;
     private SpriteRenderer _spriteRenderer;
     private int _currentStage = 0;
     private float _nextStageTime;
@@ -42,5 +43,10 @@ public class PlantableObject : MonoBehaviour, IInteractable
         _currentStage++;
         _spriteRenderer.sprite = _growthStages[_currentStage];
         _nextStageTime = Time.time + _timeBetweenStages;
+
+        if(_currentStage >= 2f)
+        {
+            _popSound.Play();
+        }
     }
 }

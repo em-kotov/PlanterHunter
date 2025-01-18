@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7054105128632711087}
   - component: {fileID: 1007733552812737274}
   - component: {fileID: 1317712803419154891}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CabbageLand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ BoxCollider2D:
     m_Bits: 256
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 3767
+    m_Bits: 7927
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -141,11 +141,11 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.4545455, y: 4.4545455}
+    oldSize: {x: 3.2666667, y: 3.2666667}
     newSize: {x: 5.76, y: 5.76}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4.5, y: 4.5}
+  m_Size: {x: 3.3, y: 3.3}
   m_EdgeRadius: 0
